@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var avatarWidth: NSLayoutConstraint!
     
-    @IBAction func zoomDidAdjust(sender: UISlider) {
+    @IBAction func zoomDidAdjust(_ sender: UISlider) {
         avatarWidth.constant = CGFloat(sender.value * 160 + 20)
         avatarView.setNeedsDisplay()
     }
@@ -28,14 +28,14 @@ class ViewController: UIViewController {
     var isMultiple = false
     var imagesEnabled = true
     
-    @IBAction func modeDidSelect(sender: UISegmentedControl) {
-        isMultiple = Bool(sender.selectedSegmentIndex)
+    @IBAction func modeDidSelect(_ sender: UISegmentedControl) {
+        isMultiple = (sender.selectedSegmentIndex == 1)
         
         setupAvatarView()
     }
     
-    @IBAction func imagesDidSwitch(sender: UISwitch) {
-        imagesEnabled = sender.on
+    @IBAction func imagesDidSwitch(_ sender: UISwitch) {
+        imagesEnabled = sender.isOn
         
         setupAvatarView()
     }

@@ -164,9 +164,11 @@
 				TargetAttributes = {
 					F659DD841A1BC98300407786 = {
 						CreatedOnToolsVersion = 6.1;
+						LastSwiftMigration = 0810;
 					};
 					F659DD991A1BC98300407786 = {
 						CreatedOnToolsVersion = 6.1;
+						LastSwiftMigration = 0810;
 						TestTargetID = F659DD841A1BC98300407786;
 					};
 				};
@@ -345,6 +347,7 @@
 				INFOPLIST_FILE = DNVAvatar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -355,6 +358,7 @@
 				INFOPLIST_FILE = DNVAvatar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -373,6 +377,7 @@
 				INFOPLIST_FILE = DNVAvatarTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DNVAvatar.app/DNVAvatar";
 			};
 			name = Debug;
@@ -388,6 +393,7 @@
 				INFOPLIST_FILE = DNVAvatarTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DNVAvatar.app/DNVAvatar";
 			};
 			name = Release;

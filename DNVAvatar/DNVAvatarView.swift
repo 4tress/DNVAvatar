@@ -11,7 +11,7 @@ import UIKit
 struct DNVAvatar {
     var image: UIImage?
     var initials: NSString
-    var color = UIColor.whiteColor()
+    var color = UIColor.white
     var backgroundColor: UIColor
     
     init(initials: NSString, backgroundColor: UIColor) {
@@ -25,24 +25,24 @@ class DNVAvatarView: UIView {
     var avatar: DNVAvatar?
     var avatars: (DNVAvatar, DNVAvatar)?
     
-    class func imageWithInitials(initials: NSString, color: UIColor, backgroundColor: UIColor, size: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(size.width, size.height), true, 0)
+    class func imageWithInitials(_ initials: NSString, color: UIColor, backgroundColor: UIColor, size: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: size.width, height: size.height), true, 0)
         
         let context = UIGraphicsGetCurrentContext()
         backgroundColor.setFill()
-        CGContextFillRect(context, CGRectMake(0, 0, size.width, size.height))
+        context?.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
         
         let font = UIFont(name: "Helvetica Bold", size: size.height / CGFloat(initials.length + 1))!
-        let style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as NSMutableParagraphStyle
-        style.alignment = NSTextAlignment.Center
+        let style = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        style.alignment = NSTextAlignment.center
         let attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: style]
-        let height = initials.sizeWithAttributes(attributes).height
-        initials.drawInRect(CGRectMake(0, (size.height - height) / 2.0, size.width, height), withAttributes: attributes)
+        let height = initials.size(attributes: attributes).height
+        initials.draw(in: CGRect(x: 0, y: (size.height - height) / 2.0, width: size.width, height: height), withAttributes: attributes)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return image
+        return image!
     }
     /*
     class func resizeImage(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
@@ -56,42 +56,42 @@ class DNVAvatarView: UIView {
         return image
     }
     */
-    class func resizeImage(image: UIImage, size: CGSize, offset: CGPoint) -> UIImage {
+    class func resizeImage(_ image: UIImage, size: CGSize, offset: CGPoint) -> UIImage {
         let scale = max((size.width + abs(offset.x)) / image.size.width, (size.height + abs(offset.y)) / image.size.height)
         
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(size.width, size.height), true, 0)
-        image.drawInRect(CGRectMake(-(image.size.width * scale - size.width) / 2.0 + offset.x / 2.0, -(image.size.height * scale - size.height) / 2.0 + offset.y / 2.0, image.size.width * scale, image.size.height * scale))
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: size.width, height: size.height), true, 0)
+        image.draw(in: CGRect(x: -(image.size.width * scale - size.width) / 2.0 + offset.x / 2.0, y: -(image.size.height * scale - size.height) / 2.0 + offset.y / 2.0, width: image.size.width * scale, height: image.size.height * scale))
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return image
+        return image!
     }
     
-    class func roundAvatarWithImages(images: (UIImage, (UIImage, UIImage)?), diameter: CGFloat) -> UIImage {
+    class func roundAvatarWithImages(_ images: (UIImage, (UIImage, UIImage)?), diameter: CGFloat) -> UIImage {
         var avatar : UIImage
         
         if let multipleImages = images.1 {
             let spacing = diameter / 60.0
-            let image1 = resizeImage(images.0, size: CGSizeMake(diameter / 2 - spacing / 2, diameter), offset: CGPointMake(diameter / 30, 0))
-            let image2 = resizeImage(multipleImages.0, size: CGSizeMake(diameter / 2 - spacing / 2, diameter / 2 - spacing / 2), offset: CGPointMake(-diameter / 20, diameter / 20))
-            let image3 = resizeImage(multipleImages.1, size: CGSizeMake(diameter / 2 - spacing / 2, diameter / 2 - spacing / 2), offset: CGPointMake(-diameter / 20, -diameter / 20))
+            let image1 = resizeImage(images.0, size: CGSize(width: diameter / 2 - spacing / 2, height: diameter), offset: CGPoint(x: diameter / 30, y: 0))
+            let image2 = resizeImage(multipleImages.0, size: CGSize(width: diameter / 2 - spacing / 2, height: diameter / 2 - spacing / 2), offset: CGPoint(x: -diameter / 20, y: diameter / 20))
+            let image3 = resizeImage(multipleImages.1, size: CGSize(width: diameter / 2 - spacing / 2, height: diameter / 2 - spacing / 2), offset: CGPoint(x: -diameter / 20, y: -diameter / 20))
             
-            UIGraphicsBeginImageContextWithOptions(CGSizeMake(diameter, diameter), false, 0)
-            image1.drawAtPoint(CGPointMake(0, 0))
-            image2.drawAtPoint(CGPointMake(diameter / 2 + spacing / 2, 0))
-            image3.drawAtPoint(CGPointMake(diameter / 2 + spacing / 2, diameter / 2 + spacing / 2))
-            avatar = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter, height: diameter), false, 0)
+            image1.draw(at: CGPoint(x: 0, y: 0))
+            image2.draw(at: CGPoint(x: diameter / 2 + spacing / 2, y: 0))
+            image3.draw(at: CGPoint(x: diameter / 2 + spacing / 2, y: diameter / 2 + spacing / 2))
+            avatar = UIGraphicsGetImageFromCurrentImageContext()!
             UIGraphicsEndImageContext()
         }
         else {
-            avatar = resizeImage(images.0, size: CGSizeMake(diameter, diameter), offset: CGPointZero)
+            avatar = resizeImage(images.0, size: CGSize(width: diameter, height: diameter), offset: CGPoint.zero)
         }
         
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(diameter, diameter), false, 0)
-        let path = UIBezierPath(ovalInRect: CGRectMake(0, 0, diameter, diameter))
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter, height: diameter), false, 0)
+        let path = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: diameter, height: diameter))
         path.addClip()
-        avatar.drawAtPoint(CGPointZero)
-        avatar = UIGraphicsGetImageFromCurrentImageContext()
+        avatar.draw(at: CGPoint.zero)
+        avatar = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
         return avatar
@@ -108,7 +108,7 @@ class DNVAvatarView: UIView {
         return avatar
     }
     */
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         var image: UIImage
         var images: (UIImage, UIImage)?
         
@@ -125,6 +125,6 @@ class DNVAvatarView: UIView {
         }
         
         let avatar = DNVAvatarView.roundAvatarWithImages((image, images), diameter: max(rect.size.width, rect.size.height))
-        avatar.drawInRect(rect)
+        avatar.draw(in: rect)
     }
 }
