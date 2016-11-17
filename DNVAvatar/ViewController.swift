@@ -8,11 +8,13 @@
 
 import UIKit
 
+
 extension UIColor {
     convenience init(hex: UInt32) {
         self.init(red: CGFloat(hex >> 16 & 0xFF) / 0xFF, green: CGFloat(hex >> 8 & 0xFF) / 0xFF, blue: CGFloat(hex & 0xFF) / 0xFF, alpha: 1)
     }
 }
+
 
 class ViewController: UIViewController {
 
@@ -45,27 +47,46 @@ class ViewController: UIViewController {
     var iveAvatar = DNVAvatar(initials: "JI", backgroundColor: UIColor(hex: 0xFF9500))
     var federighiAvatar = DNVAvatar(initials: "CF", backgroundColor: UIColor(hex: 0xFF2D55))
     
+    let jobsImage = UIImage(named: "Steve Jobs")
+    let cookImage = UIImage(named: "Tim Cook")
+    let iveImage = UIImage(named: "Jonathan Ive")
+    let federighiImage = UIImage(named: "Craig Federighi")
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupAvatarView()
     }
 
+    
     func setupAvatarView() {
-        let jobs = UIImage(named: "Steve Jobs")
-        let cook = UIImage(named: "Tim Cook")
-        let ive = UIImage(named: "Jonathan Ive")
-        let federighi = UIImage(named: "Craig Federighi")
         
-        jobsAvatar.image = (imagesEnabled == true) ? jobs : nil
-        cookAvatar.image = (imagesEnabled == true) ? cook : nil
-        iveAvatar.image = (imagesEnabled == true) ? ive : nil
-        federighiAvatar.image = (imagesEnabled == true) ? federighi : nil
+        if isMultiple {
+            avatarView.avatar1 = cookAvatar
+            avatarView.avatar2 = iveAvatar
+            avatarView.avatar3 = federighiAvatar
+            avatarView.avatar4 = DNVAvatar(name: "<test@ya.ru>")
+        }
+        else {
+            avatarView.avatar1 = jobsAvatar
+            avatarView.avatar2 = nil
+            avatarView.avatar3 = nil
+            avatarView.avatar4 = nil
+        }
         
-        avatarView.avatar = (isMultiple == true) ? cookAvatar : jobsAvatar
-        avatarView.avatars = (isMultiple == true) ? (iveAvatar, federighiAvatar) : nil
-        
-        avatarView.setNeedsDisplay()
+        if imagesEnabled {
+            jobsAvatar.image = jobsImage
+            cookAvatar.image = cookImage
+            iveAvatar.image = iveImage
+            federighiAvatar.image = federighiImage
+        }
+        else {
+            jobsAvatar.image = nil
+            cookAvatar.image = nil
+            iveAvatar.image = nil
+            federighiAvatar.image = nil
+        }
     }
 }
 
