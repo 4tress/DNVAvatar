@@ -64,6 +64,87 @@ public class DNVAvatar: NSObject {
         
         self.init(initials: initials, colorSeed: colorSeed)
     }
+    
+    
+    static let urlSession: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        configuration.urlCache = URLCache(memoryCapacity: 10_000_000, diskCapacity: 100_000_000, diskPath: nil)
+        // TODO: Implement reloadRevalidatingCacheData
+        configuration.requestCachePolicy = .returnCacheDataElseLoad
+        return URLSession(configuration: configuration)
+    }()
+    
+    
+    /// - Parameter size: Anywhere from 1px up to 2048px.
+    public func loadImageFromGravatar(email: String, size: Int = 240) {
+        
+        let hash = email.trimmingCharacters(in: .whitespacesAndNewlines).lowercased().md5
+        guard let url = URL(string: "https://www.gravatar.com/avatar/\(hash)?s=\(size)&r=x&d=404") else { return }
+        
+        DNVAvatar.urlSession.dataTask(with: url) { [weak self] data, urlResponse, error in
+//            print(urlResponse)
+            guard let data = data, let image = UIImage(data: data) else { return }
+            
+            DispatchQueue.main.async {
+                self?.image = image
+            }
+            
+        }.resume()
+    }
+    
+    
+    public func loadImageFromGoogle(email: String) {
+        
+        guard let email = email.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else { return }
+        
+        guard let url = URL(string: "https://picasaweb.google.com/data/entry/api/user/\(email)?alt=json") else { return }
+        
+        DNVAvatar.urlSession.dataTask(with: url) { data, urlResponse, error in
+//            print(urlResponse)
+            guard let data = data, let json = (try? JSONSerialization.jsonObject(with: data)) as? NSDictionary else { return }
+            
+            guard let entry = json["entry"] as? NSDictionary, let gphoto = entry["gphoto$thumbnail"] as? NSDictionary, let thumbnail = gphoto["$t"] as? String else { return }
+            
+            guard let url = URL(string: thumbnail) else { return }
+            
+            DNVAvatar.urlSession.dataTask(with: url) { [weak self] data, urlResponse, error in
+//                print(urlResponse)
+                guard let data = data, let image = UIImage(data: data) else { return }
+                
+                DispatchQueue.main.async {
+                    self?.image = image
+                }
+                
+            }.resume()
+            
+        }.resume()
+    }
+    
+    
+    /// - Parameter size: HR48x48 | HR64x64 | HR96X96 | HR120X120 | HR240X240 | HR360X360 | HR432X432 | HR504X504 | HR648X648.
+    public func loadImageFromExchange(email: String, size: String = "HR240X240", host: String, user: String? = nil, password: String? = nil) {
+        
+        var auth = ""
+        if let user = user?.addingPercentEncoding(withAllowedCharacters: .urlUserAllowed), let password = password?.addingPercentEncoding(withAllowedCharacters: .urlPasswordAllowed) {
+            auth = user + ":" + password + "@"
+        }
+        
+        guard let host = host.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+        
+        guard let email = email.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+        
+        guard let url = URL(string: "https://\(auth + host)/ews/Exchange.asmx/s/GetUserPhoto?email=\(email)&size=\(size)") else { return }
+        
+        DNVAvatar.urlSession.dataTask(with: url) { [weak self] data, urlResponse, error in
+//            print(urlResponse)
+            guard let data = data, let image = UIImage(data: data) else { return }
+            
+            DispatchQueue.main.async {
+                self?.image = image
+            }
+            
+        }.resume()
+    }
 }
 
 

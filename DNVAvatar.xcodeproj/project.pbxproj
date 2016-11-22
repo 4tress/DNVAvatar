@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC7013F51DDE6C6F00106DAA /* SwiftMD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7013F41DDE6C6F00106DAA /* SwiftMD5.swift */; };
 		F659DD8B1A1BC98300407786 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F659DD8A1A1BC98300407786 /* AppDelegate.swift */; };
 		F659DD8D1A1BC98300407786 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F659DD8C1A1BC98300407786 /* ViewController.swift */; };
 		F659DD901A1BC98300407786 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F659DD8E1A1BC98300407786 /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EC7013F41DDE6C6F00106DAA /* SwiftMD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMD5.swift; sourceTree = "<group>"; };
 		F659DD851A1BC98300407786 /* DNVAvatar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DNVAvatar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F659DD891A1BC98300407786 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F659DD8A1A1BC98300407786 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				F659DD8A1A1BC98300407786 /* AppDelegate.swift */,
 				F659DD8C1A1BC98300407786 /* ViewController.swift */,
 				F659DDAA1A1BCA5C00407786 /* DNVAvatarView.swift */,
+				EC7013F41DDE6C6F00106DAA /* SwiftMD5.swift */,
 				F659DD8E1A1BC98300407786 /* Main.storyboard */,
 				F659DD911A1BC98300407786 /* Images.xcassets */,
 				F659DD931A1BC98300407786 /* LaunchScreen.xib */,
@@ -217,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC7013F51DDE6C6F00106DAA /* SwiftMD5.swift in Sources */,
 				F659DDAB1A1BCA5C00407786 /* DNVAvatarView.swift in Sources */,
 				F659DD8D1A1BC98300407786 /* ViewController.swift in Sources */,
 				F659DD8B1A1BC98300407786 /* AppDelegate.swift in Sources */,
