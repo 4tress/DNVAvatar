@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,21 +25,10 @@
                         <subviews>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="oHv-94-AhZ">
                                 <rect key="frame" x="128.5" y="220" width="118" height="31"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="114" id="nVz-1g-9kV"/>
-                                </constraints>
                                 <connections>
                                     <action selector="zoomDidAdjust:" destination="BYZ-38-t0r" eventType="valueChanged" id="Q4x-7e-yRe"/>
                                 </connections>
                             </slider>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DXQ-pO-RBF" customClass="DNVAvatarView" customModule="DNVAvatar" customModuleProvider="target">
-                                <rect key="frame" x="137.5" y="70" width="100" height="100"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="60k-PI-9Lf"/>
-                                    <constraint firstAttribute="width" secondItem="DXQ-pO-RBF" secondAttribute="height" multiplier="1:1" id="dja-c6-kCw"/>
-                                </constraints>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="180 px" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lcs-Kw-PqC">
                                 <rect key="frame" x="274.5" y="224" width="51" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -53,7 +42,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="l1d-dT-CK9">
-                                <rect key="frame" x="124" y="280" width="127" height="29"/>
+                                <rect key="frame" x="123.5" y="280" width="127" height="29"/>
                                 <segments>
                                     <segment title="Single"/>
                                     <segment title="Multiple"/>
@@ -63,39 +52,64 @@
                                 </connections>
                             </segmentedControl>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4qX-y2-vVn">
-                                <rect key="frame" x="201.5" y="330" width="51" height="31"/>
+                                <rect key="frame" x="114.5" y="330" width="51" height="31"/>
                                 <connections>
                                     <action selector="imagesDidSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="TYl-AP-pkY"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Images" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3Q-YV-FkB">
-                                <rect key="frame" x="125.5" y="335" width="56" height="21"/>
+                                <rect key="frame" x="50.5" y="335" width="56" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yiU-cv-uLr">
+                                <rect key="frame" x="275.5" y="330" width="51" height="31"/>
+                                <connections>
+                                    <action selector="borderDidSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="aU0-SV-vTh"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Border" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IBO-nb-WVo">
+                                <rect key="frame" x="215.5" y="335" width="52" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DXQ-pO-RBF" customClass="DNVAvatarView" customModule="DNVAvatar" customModuleProvider="target">
+                                <rect key="frame" x="137.5" y="70" width="100" height="100"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="DXQ-pO-RBF" secondAttribute="height" multiplier="1:1" id="nQG-d6-xAf"/>
+                                    <constraint firstAttribute="width" constant="100" id="oR1-CE-kVj"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="4qX-y2-vVn" firstAttribute="top" secondItem="l1d-dT-CK9" secondAttribute="bottom" constant="22" id="4jW-LD-bMt"/>
-                            <constraint firstItem="l1d-dT-CK9" firstAttribute="top" secondItem="oHv-94-AhZ" secondAttribute="bottom" constant="30" id="6RW-iT-Zjg"/>
-                            <constraint firstItem="Lcs-Kw-PqC" firstAttribute="leading" secondItem="oHv-94-AhZ" secondAttribute="trailing" constant="30" id="ARa-ai-V7U"/>
-                            <constraint firstItem="M3Q-YV-FkB" firstAttribute="top" secondItem="l1d-dT-CK9" secondAttribute="bottom" constant="27" id="B3a-8F-mEq"/>
-                            <constraint firstAttribute="centerX" secondItem="l1d-dT-CK9" secondAttribute="centerX" id="GW8-6u-wrE"/>
-                            <constraint firstAttribute="centerX" secondItem="oHv-94-AhZ" secondAttribute="centerX" id="T7E-MD-sXP"/>
-                            <constraint firstAttribute="centerX" secondItem="4qX-y2-vVn" secondAttribute="centerX" constant="-38.5" id="VPU-iZ-ath"/>
-                            <constraint firstItem="oHv-94-AhZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="200" id="Y8L-Jv-lhL"/>
-                            <constraint firstItem="TwZ-J7-db7" firstAttribute="trailing" secondItem="oHv-94-AhZ" secondAttribute="leading" constant="-30" id="hZS-Xx-bfP"/>
-                            <constraint firstItem="oHv-94-AhZ" firstAttribute="centerY" secondItem="TwZ-J7-db7" secondAttribute="centerY" id="jz4-73-uUW"/>
-                            <constraint firstItem="oHv-94-AhZ" firstAttribute="centerY" secondItem="Lcs-Kw-PqC" secondAttribute="centerY" id="obv-zk-3UR"/>
-                            <constraint firstAttribute="centerX" secondItem="M3Q-YV-FkB" secondAttribute="centerX" constant="34" id="osm-aW-n9y"/>
-                            <constraint firstItem="DXQ-pO-RBF" firstAttribute="centerY" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="100" id="uZN-dl-zdK"/>
-                            <constraint firstAttribute="centerX" secondItem="DXQ-pO-RBF" secondAttribute="centerX" id="z3I-05-UiV"/>
+                            <constraint firstItem="oHv-94-AhZ" firstAttribute="centerX" secondItem="DXQ-pO-RBF" secondAttribute="centerX" id="2lr-PJ-am5"/>
+                            <constraint firstItem="oHv-94-AhZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="200" id="5kw-OK-4o4"/>
+                            <constraint firstItem="M3Q-YV-FkB" firstAttribute="baseline" secondItem="IBO-nb-WVo" secondAttribute="baseline" id="Awc-16-she"/>
+                            <constraint firstItem="4qX-y2-vVn" firstAttribute="leading" secondItem="M3Q-YV-FkB" secondAttribute="trailing" constant="8" symbolic="YES" id="Cjb-DT-Szw"/>
+                            <constraint firstItem="TwZ-J7-db7" firstAttribute="baseline" secondItem="Lcs-Kw-PqC" secondAttribute="baseline" id="JRr-Nb-k7t"/>
+                            <constraint firstItem="IBO-nb-WVo" firstAttribute="centerY" secondItem="yiU-cv-uLr" secondAttribute="centerY" id="M2x-zg-jEX"/>
+                            <constraint firstItem="TwZ-J7-db7" firstAttribute="centerY" secondItem="oHv-94-AhZ" secondAttribute="centerY" id="Pqm-dL-jeB"/>
+                            <constraint firstItem="Lcs-Kw-PqC" firstAttribute="leading" secondItem="oHv-94-AhZ" secondAttribute="trailing" constant="30" id="QlD-ea-fbt"/>
+                            <constraint firstItem="oHv-94-AhZ" firstAttribute="centerX" secondItem="l1d-dT-CK9" secondAttribute="centerX" id="SnO-fM-eWX"/>
+                            <constraint firstItem="IBO-nb-WVo" firstAttribute="leading" secondItem="4qX-y2-vVn" secondAttribute="trailing" constant="52" id="bDf-jf-sCt"/>
+                            <constraint firstItem="4qX-y2-vVn" firstAttribute="top" secondItem="l1d-dT-CK9" secondAttribute="bottom" constant="22" id="cCL-fK-5Oi"/>
+                            <constraint firstItem="TwZ-J7-db7" firstAttribute="centerX" secondItem="M3Q-YV-FkB" secondAttribute="centerX" id="cZL-f1-Ggn"/>
+                            <constraint firstItem="DXQ-pO-RBF" firstAttribute="centerY" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="100" id="dTH-GO-Ebw"/>
+                            <constraint firstItem="l1d-dT-CK9" firstAttribute="top" secondItem="oHv-94-AhZ" secondAttribute="bottom" constant="30" id="dv1-rN-E2b"/>
+                            <constraint firstItem="4qX-y2-vVn" firstAttribute="top" secondItem="yiU-cv-uLr" secondAttribute="top" id="kwc-hK-3s5"/>
+                            <constraint firstItem="yiU-cv-uLr" firstAttribute="leading" secondItem="IBO-nb-WVo" secondAttribute="trailing" constant="8" symbolic="YES" id="t73-2V-m3Q"/>
+                            <constraint firstItem="Lcs-Kw-PqC" firstAttribute="centerX" secondItem="yiU-cv-uLr" secondAttribute="centerX" id="tI3-jB-jra"/>
+                            <constraint firstItem="DXQ-pO-RBF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wCS-jT-5b7"/>
+                            <constraint firstItem="oHv-94-AhZ" firstAttribute="leading" secondItem="TwZ-J7-db7" secondAttribute="trailing" constant="30" id="xtM-Yc-vM7"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="avatarView" destination="DXQ-pO-RBF" id="b76-qs-i8X"/>
-                        <outlet property="avatarWidth" destination="60k-PI-9Lf" id="lpv-A2-fjq"/>
+                        <outlet property="avatarWidth" destination="oR1-CE-kVj" id="nt4-8z-0Bl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

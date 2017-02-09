@@ -148,6 +148,7 @@ public class DNVAvatar: NSObject {
 }
 
 
+
 public class DNVAvatarView: UIView {
 
     public var avatar1: DNVAvatar? {
@@ -187,9 +188,18 @@ public class DNVAvatarView: UIView {
     }
     
     
+    public var showsImagesBorder = true {
+        didSet {
+            if showsImagesBorder != oldValue {
+                setNeedsDisplay()
+            }
+        }
+    }
+    
+    
     class func image(avatar: DNVAvatar, size: CGSize, offset: CGPoint) -> UIImage {
         
-        UIGraphicsBeginImageContextWithOptions(size, true, 0)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
         
         var image: UIImage
         
@@ -201,7 +211,7 @@ public class DNVAvatarView: UIView {
             avatar.backgroundColor.setFill()
             context.fill(CGRect(origin: CGPoint.zero, size: size))
             
-            let font = UIFont(name: "Helvetica Bold", size: size.height / CGFloat(avatar.initials.characters.count + 1))!
+            let font = UIFont(name: "Helvetica Bold", size: size.height * 1.2 / CGFloat(avatar.initials.characters.count + 1))!
             let style = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
             style.alignment = .center
             let attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: avatar.color, NSParagraphStyleAttributeName: style]
@@ -229,10 +239,12 @@ public class DNVAvatarView: UIView {
         
         let diameter = min(bounds.width, bounds.height)
         let spacing = diameter / 60
-        let side = diameter / 2 - spacing / 2
-        let fullSize = CGSize(width: diameter, height: diameter)
-        let halfSize = CGSize(width: side, height: diameter)
-        let quarterSize = CGSize(width: side, height: side)
+        let border = showsImagesBorder ? spacing : 0
+        let longSide = diameter - border * 2
+        let shortSide = longSide / 2 - spacing / 2
+        let fullSize = CGSize(width: longSide, height: longSide)
+        let halfSize = CGSize(width: shortSide, height: longSide)
+        let quarterSize = CGSize(width: shortSide, height: shortSide)
         let offset1 = diameter / 30
         let offset2 = diameter / 20
         
@@ -259,15 +271,29 @@ public class DNVAvatarView: UIView {
             }
         }
         
-        UIGraphicsBeginImageContextWithOptions(fullSize, false, 0)
+        let size = CGSize(width: diameter, height: diameter)
+        let rect = CGRect(origin: CGPoint.zero, size: size)
         
-        let path = UIBezierPath(ovalIn: CGRect(origin: CGPoint.zero, size: fullSize))
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        
+        let path = UIBezierPath(ovalIn: CGRect(origin: CGPoint.zero, size: size))
         path.addClip()
         
-        image1?.draw(at: CGPoint.zero)
-        image2?.draw(at: CGPoint(x: side + spacing, y: 0))
-        image3?.draw(at: CGPoint(x: side + spacing, y: side + spacing))
-        image4?.draw(at: CGPoint(x: 0, y: side + spacing))
+        let context = UIGraphicsGetCurrentContext()!
+        if let avatar = avatar1, showsImagesBorder {
+            avatar.backgroundColor.set()
+            context.fill(rect)
+        }
+        
+        image1?.draw(at: CGPoint(x: border, y: border))
+        image2?.draw(at: CGPoint(x: border + shortSide + spacing, y: border))
+        image3?.draw(at: CGPoint(x: border + shortSide + spacing, y: border + shortSide + spacing))
+        image4?.draw(at: CGPoint(x: border, y: border + shortSide + spacing))
+        
+        if showsImagesBorder {
+            context.setLineWidth(border * 2)
+            context.strokeEllipse(in: rect)
+        }
         
         avatarImage = UIGraphicsGetImageFromCurrentImageContext()!
         

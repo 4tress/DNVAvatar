@@ -42,6 +42,10 @@ class ViewController: UIViewController {
         setupAvatarView()
     }
     
+    @IBAction func borderDidSwitch(_ sender: UISwitch) {
+        avatarView.showsImagesBorder = sender.isOn
+    }
+    
     var jobsAvatar = DNVAvatar(initials: "SJ", backgroundColor: UIColor(hex: 0x8E8E93))
     var cookAvatar = DNVAvatar(initials: "TC", backgroundColor: UIColor(hex: 0x5856D6))
     var iveAvatar = DNVAvatar(initials: "JI", backgroundColor: UIColor(hex: 0xFF9500))
