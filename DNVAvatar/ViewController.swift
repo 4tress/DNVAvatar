@@ -27,18 +27,20 @@ class ViewController: UIViewController {
         avatarView.setNeedsDisplay()
     }
     
-    var isMultiple = false
+    enum Mode: Int {
+        case one, two, three, four
+    }
+    var mode = Mode.one
+    
     var imagesEnabled = true
     
     @IBAction func modeDidSelect(_ sender: UISegmentedControl) {
-        isMultiple = (sender.selectedSegmentIndex == 1)
-        
+        mode = Mode(rawValue: sender.selectedSegmentIndex)!
         setupAvatarView()
     }
     
     @IBAction func imagesDidSwitch(_ sender: UISwitch) {
         imagesEnabled = sender.isOn
-        
         setupAvatarView()
     }
     
@@ -66,17 +68,27 @@ class ViewController: UIViewController {
     
     func setupAvatarView() {
         
-        if isMultiple {
-            avatarView.avatar1 = cookAvatar
-            avatarView.avatar2 = iveAvatar
-            avatarView.avatar3 = federighiAvatar
-            avatarView.avatar4 = DNVAvatar(name: "<test@ya.ru>")
-        }
-        else {
+        switch mode {
+        case .one:
             avatarView.avatar1 = jobsAvatar
             avatarView.avatar2 = nil
             avatarView.avatar3 = nil
             avatarView.avatar4 = nil
+        case .two:
+            avatarView.avatar1 = iveAvatar
+            avatarView.avatar2 = federighiAvatar
+            avatarView.avatar3 = nil
+            avatarView.avatar4 = nil
+        case .three:
+            avatarView.avatar1 = cookAvatar
+            avatarView.avatar2 = iveAvatar
+            avatarView.avatar3 = federighiAvatar
+            avatarView.avatar4 = nil
+        case .four:
+            avatarView.avatar1 = federighiAvatar
+            avatarView.avatar2 = cookAvatar
+            avatarView.avatar3 = jobsAvatar
+            avatarView.avatar4 = iveAvatar
         }
         
         if imagesEnabled {

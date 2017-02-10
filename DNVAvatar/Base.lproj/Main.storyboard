@@ -42,10 +42,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="l1d-dT-CK9">
-                                <rect key="frame" x="123.5" y="280" width="127" height="29"/>
+                                <rect key="frame" x="85.5" y="280" width="203" height="29"/>
                                 <segments>
-                                    <segment title="Single"/>
-                                    <segment title="Multiple"/>
+                                    <segment title="One"/>
+                                    <segment title="Two"/>
+                                    <segment title="Three"/>
+                                    <segment title="Four"/>
                                 </segments>
                                 <connections>
                                     <action selector="modeDidSelect:" destination="BYZ-38-t0r" eventType="valueChanged" id="q9L-ga-neh"/>

@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DNVAvatar"
-  s.version      = "0.3"
+  s.version      = "0.3.1"
   s.summary      = "Round Avatar View for iOS apps."
 
   s.description  = <<-DESC

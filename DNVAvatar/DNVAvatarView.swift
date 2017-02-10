@@ -238,7 +238,7 @@ public class DNVAvatarView: UIView {
         var image1, image2, image3, image4: UIImage?
         
         let diameter = min(bounds.width, bounds.height)
-        let spacing = diameter / 60
+        let spacing = diameter / 40
         let border = showsImagesBorder ? spacing : 0
         let longSide = diameter - border * 2
         let shortSide = longSide / 2 - spacing / 2
@@ -246,7 +246,7 @@ public class DNVAvatarView: UIView {
         let halfSize = CGSize(width: shortSide, height: longSide)
         let quarterSize = CGSize(width: shortSide, height: shortSide)
         let offset1 = diameter / 30
-        let offset2 = diameter / 20
+        let offset2 = diameter / 15
         
         if let avatar1 = avatar1 {
             if let avatar2 = avatar2 {
