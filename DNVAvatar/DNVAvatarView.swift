@@ -124,26 +124,72 @@ public class DNVAvatar: NSObject {
     /// - Parameter size: HR48x48 | HR64x64 | HR96X96 | HR120X120 | HR240X240 | HR360X360 | HR432X432 | HR504X504 | HR648X648.
     public func loadImageFromExchange(email: String, size: String = "HR240X240", host: String, user: String? = nil, password: String? = nil) {
         
-        var auth = ""
-        if let user = user?.addingPercentEncoding(withAllowedCharacters: .urlUserAllowed), let password = password?.addingPercentEncoding(withAllowedCharacters: .urlPasswordAllowed) {
-            auth = user + ":" + password + "@"
-        }
-        
         guard let host = host.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
         
         guard let email = email.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
         
-        guard let url = URL(string: "https://\(auth + host)/ews/Exchange.asmx/s/GetUserPhoto?email=\(email)&size=\(size)") else { return }
+        guard let url = URL(string: "https://\(host)/ews/Exchange.asmx/s/GetUserPhoto?email=\(email)&size=\(size)") else { return }
         
-        DNVAvatar.urlSession.dataTask(with: url) { [weak self] data, urlResponse, error in
+        let (image, tag, time) = DNVAvatar.imageTagTimeCache(url: url, user: user, password: password)
+        if let image = image {
+            self.image = image
+        }
+        
+        if let time = time, Date.timeIntervalSinceReferenceDate - time < 60 { return } // Last check was less than a minute ago.
+        
+        var request = URLRequest(url: url)
+        if let user = user, let password = password {
+            let auth = user + ":" + password
+            request.setValue("Basic \(auth.data(using: .utf8)!.base64EncodedString())", forHTTPHeaderField: "Authorization")
+        }
+        request.setValue(tag, forHTTPHeaderField: "If-None-Match")
+        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        
+        DNVAvatar.urlSession.dataTask(with: request) { [weak self] data, response, error in
 //            print(urlResponse)
-            guard let data = data, let image = UIImage(data: data) else { return }
+            guard let response = response as? HTTPURLResponse, [200, 304, 404].contains(response.statusCode) else { return }
             
-            DispatchQueue.main.async {
-                self?.image = image
+            let image = UIImage(data: data ?? Data())
+            let tag = response.allHeaderFields["Etag"] as? String
+            DNVAvatar.cache(image: image, url: url, tag: tag, user: user, password: password)
+            
+            if image != nil || tag == nil {
+                DispatchQueue.main.async {
+                    self?.image = image
+                }
             }
             
         }.resume()
+    }
+    
+    
+    private static func imageTagTimeCache(url: URL, user: String? = nil, password: String? = nil) -> (UIImage?, String?, TimeInterval?) {
+        
+        guard let cachesURL = try? FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else { return (nil, nil, nil) }
+        
+        let imageURL = cachesURL.appendingPathComponent(url.absoluteString.md5).appendingPathExtension("aaa")
+        let imageData = try? Data(contentsOf: imageURL)
+        var image: UIImage?
+        if let imageData = imageData {
+            image = UIImage(data: imageData)
+        }
+        
+        return (image, FileManager.default.tagOfItemAt(imageURL), FileManager.default.timeOfItemAt(imageURL))
+    }
+    
+    
+    private static func cache(image: UIImage?, url: URL, tag: String? = nil, user: String? = nil, password: String? = nil) {
+        
+        guard let cachesURL = try? FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true) else { return }
+        
+        let imageURL = cachesURL.appendingPathComponent(url.absoluteString.md5).appendingPathExtension("aaa")
+        let imageData = UIImageJPEGRepresentation(image ?? UIImage(), 0.8) ?? Data()
+        if image != nil || tag == nil {
+            try? imageData.write(to: imageURL)
+        }
+        
+        FileManager.default.setTag(tag, ofItemAt: imageURL)
+        FileManager.default.setTime(Date.timeIntervalSinceReferenceDate, ofItemAt: imageURL)
     }
 }
 

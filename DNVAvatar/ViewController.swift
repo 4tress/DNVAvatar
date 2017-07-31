@@ -48,6 +48,9 @@ class ViewController: UIViewController {
         avatarView.showsImagesBorder = sender.isOn
     }
     
+    @IBAction func reloadImage(_ sender: UIButton) {
+    }
+    
     var jobsAvatar = DNVAvatar(initials: "SJ", backgroundColor: UIColor(hex: 0x8E8E93))
     var cookAvatar = DNVAvatar(initials: "TC", backgroundColor: UIColor(hex: 0x5856D6))
     var iveAvatar = DNVAvatar(initials: "JI", backgroundColor: UIColor(hex: 0xFF9500))
