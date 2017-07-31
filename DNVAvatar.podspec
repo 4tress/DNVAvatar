@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DNVAvatar"
-  s.version      = "0.3.1"
+  s.version      = "0.4"
   s.summary      = "Round Avatar View for iOS apps."
 
   s.description  = <<-DESC
@@ -14,7 +14,7 @@ DESC
 
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/DnV1eX/DNVAvatar.git", :tag => "#{s.version}" }
-  s.source_files = "DNVAvatar/DNVAvatarView.swift", "DNVAvatar/SwiftMD5.swift"
+  s.source_files = "DNVAvatar/DNVAvatarView.swift", "DNVAvatar/SwiftMD5.swift", "DNVAvatar/FileManager+ExtendedAttributes.swift"
   s.requires_arc = true
   s.pod_target_xcconfig = { "SWIFT_VERSION" => "3.0" }
 
