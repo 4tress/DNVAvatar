@@ -9,22 +9,22 @@
 import UIKit
 
 
-public class DNVAvatar: NSObject {
+@objc public class DNVAvatar: NSObject {
     
-    public var image: UIImage? {
+    @objc public var image: UIImage? {
         didSet {
             onImageLoad?()
         }
     }
     
-    var onImageLoad: (() -> ())?
+    @objc var onImageLoad: (() -> ())?
     
-    public let initials: String
-    public let color: UIColor
-    public let backgroundColor: UIColor
+    @objc public let initials: String
+    @objc public let color: UIColor
+    @objc public let backgroundColor: UIColor
     
     
-    public init(initials: String, color: UIColor? = nil, backgroundColor: UIColor) {
+    @objc public init(initials: String, color: UIColor? = nil, backgroundColor: UIColor) {
         
         self.initials = initials
         
@@ -36,7 +36,7 @@ public class DNVAvatar: NSObject {
     }
     
     
-    public convenience init(initials: String, colorSeed: Int, paletteSize: Int = 10) {
+    @objc public convenience init(initials: String, colorSeed: Int, paletteSize: Int = 10) {
         
         let color = UIColor(hue: CGFloat(colorSeed % paletteSize) / CGFloat(paletteSize), saturation: 0.5, brightness: 0.8, alpha: 1)
         
@@ -44,7 +44,7 @@ public class DNVAvatar: NSObject {
     }
     
     
-    public convenience init(name: String) {
+    @objc public convenience init(name: String) {
         
         var initials = name.components(separatedBy: " ").reduce("") { result, component in
             
@@ -76,7 +76,7 @@ public class DNVAvatar: NSObject {
     
     
     /// - Parameter size: Anywhere from 1px up to 2048px.
-    public func loadImageFromGravatar(email: String, size: Int = 240) {
+    @objc public func loadImageFromGravatar(email: String, size: Int = 240) {
         
         let hash = email.trimmingCharacters(in: .whitespacesAndNewlines).lowercased().md5
         guard let url = URL(string: "https://www.gravatar.com/avatar/\(hash)?s=\(size)&r=x&d=404") else { return }
@@ -93,7 +93,7 @@ public class DNVAvatar: NSObject {
     }
     
     
-    public func loadImageFromGoogle(email: String) {
+    @objc public func loadImageFromGoogle(email: String) {
         
         guard let email = email.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else { return }
         
@@ -122,7 +122,7 @@ public class DNVAvatar: NSObject {
     
     
     /// - Parameter size: HR48x48 | HR64x64 | HR96X96 | HR120X120 | HR240X240 | HR360X360 | HR432X432 | HR504X504 | HR648X648.
-    public func loadImageFromExchange(email: String, size: String = "HR240X240", host: String, user: String? = nil, password: String? = nil) {
+    @objc public func loadImageFromExchange(email: String, size: String = "HR240X240", host: String, user: String? = nil, password: String? = nil) {
         
         guard let host = host.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
         
@@ -178,7 +178,7 @@ public class DNVAvatar: NSObject {
     }
     
     
-    private static func cache(image: UIImage?, url: URL, tag: String? = nil, user: String? = nil, password: String? = nil) {
+    @objc private static func cache(image: UIImage?, url: URL, tag: String? = nil, user: String? = nil, password: String? = nil) {
         
         guard let cachesURL = try? FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true) else { return }
         
@@ -195,9 +195,9 @@ public class DNVAvatar: NSObject {
 
 
 
-public class DNVAvatarView: UIView {
+@objc public class DNVAvatarView: UIView {
 
-    public var avatar1: DNVAvatar? {
+    @objc public var avatar1: DNVAvatar? {
         didSet {
             setNeedsDisplay()
             avatar1?.onImageLoad = { [weak self] in
@@ -206,7 +206,7 @@ public class DNVAvatarView: UIView {
         }
     }
     
-    public var avatar2: DNVAvatar? {
+    @objc public var avatar2: DNVAvatar? {
         didSet {
             setNeedsDisplay()
             avatar2?.onImageLoad = { [weak self] in
@@ -215,7 +215,7 @@ public class DNVAvatarView: UIView {
         }
     }
     
-    public var avatar3: DNVAvatar? {
+    @objc public var avatar3: DNVAvatar? {
         didSet {
             setNeedsDisplay()
             avatar3?.onImageLoad = { [weak self] in
@@ -224,7 +224,7 @@ public class DNVAvatarView: UIView {
         }
     }
     
-    public var avatar4: DNVAvatar? {
+    @objc public var avatar4: DNVAvatar? {
         didSet {
             setNeedsDisplay()
             avatar4?.onImageLoad = { [weak self] in
@@ -234,7 +234,7 @@ public class DNVAvatarView: UIView {
     }
     
     
-    public var showsImagesBorder = true {
+    @objc public var showsImagesBorder = true {
         didSet {
             if showsImagesBorder != oldValue {
                 setNeedsDisplay()
@@ -243,7 +243,7 @@ public class DNVAvatarView: UIView {
     }
     
     
-    class func image(avatar: DNVAvatar, size: CGSize, offset: CGPoint) -> UIImage {
+    @objc class func image(avatar: DNVAvatar, size: CGSize, offset: CGPoint) -> UIImage {
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         
@@ -260,8 +260,8 @@ public class DNVAvatarView: UIView {
             let font = UIFont(name: "Helvetica Bold", size: size.height * 1.2 / CGFloat(avatar.initials.characters.count + 1))!
             let style = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
             style.alignment = .center
-            let attributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: avatar.color, NSParagraphStyleAttributeName: style]
-            let height = avatar.initials.size(attributes: attributes).height
+            let attributes = [NSAttributedStringKey.font: font, NSAttributedStringKey.foregroundColor: avatar.color, NSAttributedStringKey.paragraphStyle: style]
+            let height = avatar.initials.size(withAttributes: attributes).height
             avatar.initials.draw(in: CGRect(x: 0, y: (size.height - height) / 2, width: size.width, height: height), withAttributes: attributes)
             
             image = UIGraphicsGetImageFromCurrentImageContext()!
@@ -278,7 +278,7 @@ public class DNVAvatarView: UIView {
     }
     
     
-    func roundedAvatarImage() -> UIImage {
+    @objc func roundedAvatarImage() -> UIImage {
         
         let avatarImage: UIImage
         var image1, image2, image3, image4: UIImage?
@@ -349,7 +349,7 @@ public class DNVAvatarView: UIView {
     }
     
     
-    override public func draw(_ rect: CGRect) {
+    @objc override public func draw(_ rect: CGRect) {
         
         let avatarImage = roundedAvatarImage()
         
