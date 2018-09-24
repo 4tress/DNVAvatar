@@ -17,7 +17,8 @@ extension FileManager {
         if size == -1 { throw FileManager.posixError() }
         
         var value = Data(count: size)
-        size = value.withUnsafeMutableBytes{ getxattr(path, name, $0, value.count, 0, 0) }
+        var localValue = value
+        size = localValue.withUnsafeMutableBytes{ getxattr(path, name, $0, value.count, 0, 0) }
         if size == -1 { throw FileManager.posixError() }
         
         return value

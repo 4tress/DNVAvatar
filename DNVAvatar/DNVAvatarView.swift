@@ -48,19 +48,19 @@ import UIKit
         
         var initials = name.components(separatedBy: " ").reduce("") { result, component in
             
-            if let unicodeScalar = component.unicodeScalars.first, CharacterSet.alphanumerics.contains(unicodeScalar), result.characters.count < 2 {
+            if let unicodeScalar = component.unicodeScalars.first, CharacterSet.alphanumerics.contains(unicodeScalar), result.count < 2 {
                 return result + String(unicodeScalar)
             }
             else {
                 return result
             }
         }
-        if initials.characters.count == 0 {
+        if initials.count == 0 {
             let unicodeScalar: UnicodeScalar = name.unicodeScalars.first() { CharacterSet.alphanumerics.contains($0) } ?? "?"
             initials = String(unicodeScalar)
         }
         
-        let colorSeed = name.characters.count
+        let colorSeed = name.count
         
         self.init(initials: initials, colorSeed: colorSeed)
     }
@@ -257,7 +257,7 @@ import UIKit
             avatar.backgroundColor.setFill()
             context.fill(CGRect(origin: CGPoint.zero, size: size))
             
-            let font = UIFont(name: "Helvetica Bold", size: size.height * 1.2 / CGFloat(avatar.initials.characters.count + 1))!
+            let font = UIFont(name: "Helvetica Bold", size: size.height * 1.2 / CGFloat(avatar.initials.count + 1))!
             let style = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
             style.alignment = .center
             let attributes = [NSAttributedStringKey.font: font, NSAttributedStringKey.foregroundColor: avatar.color, NSAttributedStringKey.paragraphStyle: style]
